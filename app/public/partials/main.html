@@ -1,0 +1,27 @@
+<div>
+    <canvas id="myChart" width="200" height="200"></canvas>
+    <div class="stock-panels">
+
+        <span ng-repeat="stock in currentStocks track by $index" class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+                {{stock}}
+            </div>
+        </span>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+                Syncs in realtime across clients
+                <form ng-submit="addStock()">
+                    <input type="text" placeholder="Stock code" ng-model="form.stockCode"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

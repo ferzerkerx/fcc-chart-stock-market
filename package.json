@@ -1,0 +1,32 @@
+{
+  "name": "fcc-chart-stock-market",
+  "version": "0.0.1",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferzerkerx/fcc-chart-stock-market"
+  },
+  "homepage": "https://github.com/ferzerkerx/fcc-chart-stock-market",
+  "bugs": "https://github.com/ferzerkerx/fcc-chart-stock-market/issues",
+  "keywords": [
+    "Express",
+    "Node",
+    "javascript",
+    "FreeCodeCamp"
+  ],
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "author": "Fernando Montes",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "bower": "^1.7.9",
+    "dotenv": "^1.2.0",
+    "express": "^4.12.4",
+    "http": "0.0.0",
+    "qs": "^6.2.0",
+    "ws": "^1.1.0"
+  }
+}

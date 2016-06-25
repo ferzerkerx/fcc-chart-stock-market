@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="stockApp">
+<head>
+    <meta charset="UTF-8">
+    <title>FCC Chart Stock Market App</title>
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/app.css">
+</head>
+<body>
+
+
+<div class="container main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main text-center">
+                <h1>FCC Chart Stock Market App</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-view class="col-md-12">
+
+        </div>
+    </div>
+</div>
+<div class="text-center by">
+    <a href="https://github.com/ferzerkerx" target="_blank">by ferzerkerx</a>
+</div>
+
+<script src="public/bower_components/jquery/dist/jquery.js"></script>
+<script src="public/bower_components/angular/angular.js"></script>
+<script src="public/bower_components/angular-route/angular-route.js"></script>
+<script src="public/bower_components/angular-resource/angular-resource.js"></script>
+<script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="public/bower_components/Chart.js/dist/Chart.min.js"></script>
+
+<script src="public/js/app.js"></script>
+<script src="public/js/controllers.js"></script>
+<script src="public/js/services.js"></script>
+</body>
+</html>
