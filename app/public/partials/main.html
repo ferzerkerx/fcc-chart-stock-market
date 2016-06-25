@@ -2,9 +2,10 @@
     <canvas id="myChart" width="200" height="200"></canvas>
     <div class="stock-panels">
 
-        <span ng-repeat="stock in currentStocks track by $index" class="panel panel-info">
+        <span ng-repeat="stock in currentStocks" class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Panel title</h3>
+                <a ng-click="removeStock(stock)">Remove</a>
             </div>
             <div class="panel-body">
                 {{stock}}

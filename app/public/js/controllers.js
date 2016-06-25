@@ -24,10 +24,16 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
         notifyingService.subscribe($scope, refreshStockData);
 
         $scope.addStock = function () {
-            console.log('adding stock...' + $scope.form.stockCode);
-            stockServices.addStockCode($scope.form.stockCode);
+            stockServices.addStockCode($scope.form.stockCode).then(function(data) {
+
+            });
         };
 
+        $scope.removeStock = function (stockCode) {
+            stockServices.removeStockCode(stockCode).then(function(data) {
+
+            });
+        };
 
 
         var renderChart = function() {

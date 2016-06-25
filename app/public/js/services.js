@@ -8,6 +8,12 @@ var stockServices = angular.module('stockServices', ['ngResource']);
 stockServices.factory('stockServices', ['$http', '$location', 'notifyingService',
     function($http, $location, notifyingService) {
 
+
+        var appContext = $location.absUrl();
+        if (appContext.indexOf("#")) {
+            appContext =  appContext.substring(0, appContext.indexOf("#") - 1);
+        }
+
         var currentStocks = [];
         var ws = new WebSocket("ws://" + $location.host() + ':' + $location.port());
 
@@ -23,7 +29,18 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
         };
 
         var addStockCode = function(stockCode) {
-            ws.send(stockCode);
+            var url = appContext + '/api/stockCode';
+            return $http.post(url, {stockCode: stockCode}).then(function (response) {
+                return response.data;
+            });
+
+        };
+
+        var removeStockCode = function(stockCode) {
+            var url = appContext + '/api/stockCode/' + stockCode;
+            return $http.delete(url).then(function (response) {
+                return response.data;
+            });
         };
 
         var getCurrentStockCodes = function() {
@@ -40,16 +57,18 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
         return {
             listStockData: listStockData,
             addStockCode: addStockCode,
+            removeStockCode: removeStockCode,
             currentStocks: getCurrentStockCodes
         };
     }]);
 
 
+//http://www.codelord.net/2015/05/04/angularjs-notifying-about-changes-from-services-to-controllers/
 stockServices.factory('notifyingService', function($rootScope) {
     return {
         subscribe: function(scope, callback) {
-            var handler = $rootScope.$on('notifying-service-event', callback);
-            scope.$on('$destroy', handler);
+            var removeHandler = $rootScope.$on('notifying-service-event', callback);
+            scope.$on('$destroy', removeHandler);
         },
 
         notify: function() {

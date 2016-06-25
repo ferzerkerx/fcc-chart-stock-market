@@ -10,22 +10,15 @@ function ApiService (wss) {
     }
 
     wss.on('connection', function connection(ws) {
-
-        console.log('###connection:');
-        ws.on('message', function incoming(stockCode) {
-            console.log('received: %s', stockCode);
-            currentStockCodes.push(stockCode);
-            broadCastToAllClients(wss);
-        });
-
-
         ws.send(JSON.stringify(currentStockCodes));
     });
 
     this.addStockCode = function (req, res) {
-        var stockCode = req.params.stockCode;
+        var stockCode = req.body.stockCode;
+        //TODO validate
+
         currentStockCodes.push(stockCode);
-        broadCastToAllClients();
+        broadCastToAllClients(wss);
         return res.status(200);
     };
 
@@ -36,7 +29,7 @@ function ApiService (wss) {
         if (index >= 0) {
             currentStockCodes.splice(index, 1);
         }
-        broadCastToAllClients();
+        broadCastToAllClients(wss);
         return res.status(200);
     };
 }

@@ -7,10 +7,10 @@ module.exports = function (app, wss) {
 
     var apiService = new ApiService(wss);
 
-    app.route('/api/:stockCode')
+    app.route('/api/stockCode')
         .post(apiService.addStockCode);
 
-    app.route('/api/:stockCode')
+    app.route('/api/stockCode/:stockCode')
         .delete(apiService.deleteStockCode);
 
 };
