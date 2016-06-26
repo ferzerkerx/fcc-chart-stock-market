@@ -5,18 +5,47 @@ var stockControllers = angular.module('stockControllers', []);
 
 stockControllers.controller('mainController', ['$scope', '$route', '$rootScope', '$window','$location', 'stockServices', 'notifyingService',
     function ($scope, $route, $rootScope, $window, $location, stockServices, notifyingService) {
-
-        console.log('### controller');
         $scope.form = {};
 
         $scope.currentStocks = stockServices.currentStocks();
 
+        function generateColor() {
+            var number = Math.floor(Math.random() * 16777216);
+            var color = '#' + number.toString(16);
+            return color;
+        }
+
         var refreshStockData = function() {
             $scope.currentStocks = stockServices.currentStocks();
-            console.log("### refreshStockData:" + JSON.stringify($scope.currentStocks));
+            if ($scope.currentStocks.length === 0) {
+                renderChart([], []);
+                return;
+            }
             stockServices.listStockData().then(function (data) {
-                console.log('TEST####' + JSON.stringify(data));
-                renderChart();
+                var quotes = data.query.results.quote;
+                var dataSets = {};
+                var labels = [];
+
+                $scope.currentStocks.forEach(function(currentValue) {
+
+                    dataSets[currentValue.stockCode] =
+                    {
+                        labels: [],
+                        label: currentValue.name,
+                        data: [],
+                        backgroundColor: [generateColor()],
+                        borderColor: [generateColor()],
+                        borderWidth: 1
+
+                    };
+                });
+
+                quotes.forEach(function(currentValue) {
+                    dataSets[currentValue.Symbol].data.push(currentValue.Close);
+                    labels.push(currentValue.Date);
+                });
+
+                renderChart(dataSets, labels);
             });
 
         };
@@ -24,8 +53,18 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
         notifyingService.subscribe($scope, refreshStockData);
 
         $scope.addStock = function () {
-            stockServices.addStockCode($scope.form.stockCode).then(function(data) {
 
+            for (var i = 0; i < $scope.currentStocks.length; i++) {
+                if ($scope.currentStocks[i] === $scope.form.stockCode) {
+                    return;
+                }
+            }
+
+            stockServices.addStockCode($scope.form.stockCode).then(function(data) {
+                if (data === undefined) {
+                    console.error('Invalid Stock.');
+                }
+                $scope.form.stockCode = "";
             });
         };
 
@@ -36,33 +75,13 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
         };
 
 
-        var renderChart = function() {
+        var renderChart = function(data, labels) {
             var ctx = $("#myChart");
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'line',
                 data: {
-                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+                    labels: labels,
+                    datasets: data
                 },
                 options: {
                     scales: {

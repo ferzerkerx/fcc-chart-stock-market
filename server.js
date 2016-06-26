@@ -25,7 +25,6 @@ var port = process.env.PORT || 8080;
 
 
 wss.broadcast = function broadcast(data) {
-    console.log('#broadcasting:'  + data);
     wss.clients.forEach(function each(client) {
         client.send(data);
     });

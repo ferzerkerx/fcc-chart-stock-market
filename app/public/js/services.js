@@ -19,21 +19,22 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
 
         ws.onmessage = function (evt) {
             var received_msg = evt.data;
-            console.log("Message is received..." + received_msg);
             currentStocks = JSON.parse(received_msg);
             notifyingService.notify();
         };
 
         ws.onclose = function() {
-            console.log("Connection is closed...");
+            alert('Lost connection with the server try to reload the page.');
         };
 
         var addStockCode = function(stockCode) {
             var url = appContext + '/api/stockCode';
             return $http.post(url, {stockCode: stockCode}).then(function (response) {
                 return response.data;
+            },
+             function errorCallback() {
+                    return undefined;
             });
-
         };
 
         var removeStockCode = function(stockCode) {
@@ -48,7 +49,13 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
         };
 
         var listStockData = function() {
-            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol IN ("YHOO", "CSCO") and startDate = "2015-09-11" and endDate = "2016-03-10"&format=json&env=store://datatables.org/alltableswithkeys';
+            var stockCodes = [];
+            currentStocks.forEach(function(e) {
+                stockCodes.push('"' + e.stockCode + '"');
+            });
+            stockCodes = stockCodes.join(',');
+
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol IN (' + stockCodes +') and startDate = "2015-09-11" and endDate = "2016-03-10"&format=json&env=store://datatables.org/alltableswithkeys';
             return $http.get(url).then(function (response) {
                 return response.data;
             });
