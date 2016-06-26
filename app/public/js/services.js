@@ -15,7 +15,7 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
         }
 
         var currentStocks = [];
-        var ws = new WebSocket("ws://" + $location.host() + ':' + $location.port());
+        var ws = new WebSocket($location.protocol() === 'http' ? "ws://" : "wss://" + $location.host() + ':' + $location.port());
 
         ws.onmessage = function (evt) {
             var received_msg = evt.data;
