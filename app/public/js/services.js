@@ -48,16 +48,20 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
             return currentStocks;
         };
 
-        var listStockData = function() {
+        var listStockData = function(startDate, endDate) {
             var stockCodes = [];
             currentStocks.forEach(function(e) {
                 stockCodes.push('"' + e.stockCode + '"');
             });
             stockCodes = stockCodes.join(',');
 
-            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol IN (' + stockCodes +') and startDate = "2015-09-11" and endDate = "2016-03-10"&format=json&env=store://datatables.org/alltableswithkeys';
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol IN (' + stockCodes +') and startDate = "' + startDate +'" and endDate = "' + endDate + '"&format=json&env=store://datatables.org/alltableswithkeys';
             return $http.get(url).then(function (response) {
-                return response.data;
+                return response.data.query.results.quote.map(function(e) {
+                    return {Close: e.Close, Symbol: e.Symbol, Date: e.Date};
+
+                });
+
             });
         };
 

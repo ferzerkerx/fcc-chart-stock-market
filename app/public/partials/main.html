@@ -1,22 +1,28 @@
-<div>
-    <canvas id="myChart" width="200" height="200"></canvas>
+<div class="chart">
+    <div class="row">
+        <div class="col-md-12 chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
     <div class="stock-panels">
 
-        <span ng-repeat="stock in currentStocks">
-            <div class="panel panel-info">
+        <div ng-repeat="stock in currentStocks" class="test">
+            <div class="panel panel-info stock-container">
             <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
-                <a ng-click="removeStock(stock.stockCode)">Remove</a>
+                <h3 class="panel-title">{{stock.stockCode}}<a ng-click="removeStock(stock.stockCode)" class="pull-right remove-stock">X</a></h3>
             </div>
-            <div class="panel-body">
-                {{stock}}
+            <div class="panel-body stock-name">
+                {{stock.name}}
             </div>
             </div>
-        </span>
+        </div>
 
-        <div class="panel panel-success">
+        <div class="panel panel-success test" >
             <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
+                <h3 class="panel-title">Add Stock</h3>
             </div>
             <div class="panel-body">
                 Syncs in realtime across clients
@@ -27,4 +33,6 @@
 
         </div>
     </div>
+            </div>
+        </div>
 </div>
