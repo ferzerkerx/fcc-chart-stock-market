@@ -1,5 +1,16 @@
 <div class="chart">
     <div class="row">
+        <div class="col-md-12 chart-controls">
+            <button class="btn btn-success" ng-click="control('1m')">1m</button>
+            <button class="btn btn-success" ng-click="control('3m')">3m</button>
+            <button class="btn btn-success" ng-click="control('6m')">6m</button>
+
+            <span class="pull-right right-controls">
+                <input type="date" ng-model="controls.startDate" disabled/> - <input type="date" ng-model="controls.endDate" disabled/>
+            </span>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12 chart-container">
             <canvas id="myChart"></canvas>
         </div>
@@ -7,32 +18,34 @@
 
     <div class="row">
         <div class="col-md-12">
-    <div class="stock-panels">
+            <div class="stock-panels">
 
-        <div ng-repeat="stock in currentStocks" class="test">
-            <div class="panel panel-info stock-container">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{stock.stockCode}}<a ng-click="removeStock(stock.stockCode)" class="pull-right remove-stock">X</a></h3>
-            </div>
-            <div class="panel-body stock-name">
-                {{stock.name}}
-            </div>
-            </div>
-        </div>
+                <div ng-repeat="stock in currentStocks" class="test">
+                    <div class="panel panel-info stock-container">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{stock.stockCode}}<a ng-click="removeStock(stock.stockCode)"
+                                                                          class="pull-right remove-stock">X</a></h3>
+                        </div>
+                        <div class="panel-body stock-name">
+                            {{stock.name}}
+                        </div>
+                    </div>
+                </div>
 
-        <div class="panel panel-success test" >
-            <div class="panel-heading">
-                <h3 class="panel-title">Add Stock</h3>
-            </div>
-            <div class="panel-body">
-                Syncs in realtime across clients
-                <form ng-submit="addStock()">
-                    <input type="text" placeholder="Stock code" ng-model="form.stockCode"/>
-                </form>
-            </div>
+                <div class="panel panel-success test">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Add Stock</h3>
+                    </div>
+                    <div class="panel-body">
+                        Syncs in realtime across clients
+                        <form ng-submit="addStock()">
+                            <input type="text" placeholder="Stock code" ng-model="form.stockCode"/>
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </form>
+                    </div>
 
+                </div>
+            </div>
         </div>
     </div>
-            </div>
-        </div>
 </div>

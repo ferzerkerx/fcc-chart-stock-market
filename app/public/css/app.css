@@ -55,3 +55,27 @@ body {
 .test {
     display: inline-block;
 }
+
+.chart-controls {
+    margin-top: 1em;
+}
+
+.chart-controls button {
+    margin-left: 1em;
+}
+
+.right-controls {
+    margin-right: 2em;
+}
+
+input{
+    text-align:center;
+}
+
+.panel-heading a {
+    margin-right: 0.3em;
+}
+
+.by {
+    padding-bottom: 2em;
+}

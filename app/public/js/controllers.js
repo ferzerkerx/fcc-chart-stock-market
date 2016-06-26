@@ -5,14 +5,42 @@ var stockControllers = angular.module('stockControllers', []);
 
 stockControllers.controller('mainController', ['$scope', '$route', '$rootScope', '$window','$location', 'stockServices', 'notifyingService',
     function ($scope, $route, $rootScope, $window, $location, stockServices, notifyingService) {
-        $scope.form = {};
-
-        $scope.currentStocks = stockServices.currentStocks();
 
         function generateColor() {
             var number = Math.floor(Math.random() * 16777216);
             return '#' + number.toString(16);
         }
+
+        function formatDate(date) {
+            return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+        }
+
+        $scope.form = {};
+        var now = new Date(Date.now());
+        var millisecondsInMonth = 1000 * 60 * 60 * 24 * 30;
+        $scope.controls = {startDate: new Date(Date.now() - millisecondsInMonth), endDate: now};
+
+        $scope.currentStocks = stockServices.currentStocks();
+
+
+        $scope.control = function(data) {
+            var multiplier = 1;
+            switch (data) {
+                case '1m':
+                    multiplier = 1;
+                    break;
+                case '3m':
+                    multiplier = 3;
+                    break;
+                case '6m':
+                    multiplier = 6;
+                    break;
+            }
+
+            $scope.controls.startDate = new Date(Date.now() - (millisecondsInMonth * multiplier));
+            refreshStockData();
+
+        };
 
         var refreshStockData = function() {
             $scope.currentStocks = stockServices.currentStocks();
@@ -21,8 +49,8 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
                 return;
             }
 
-            var startDate = "2015-09-11";
-            var endDate = "2016-01-14";
+            var startDate = formatDate($scope.controls.startDate);
+            var endDate = formatDate($scope.controls.endDate);
             stockServices.listStockData(startDate, endDate).then(function (data) {
                 var quotes = data;
                 var dataSets = {};
@@ -52,13 +80,13 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
                 var currentQuote = undefined;
                 for (var i = 0; i < quotes.length; i++) {
                     var quote = quotes[i];
-                    dataSets[quote.Symbol].data.push(quote.Close);
+                    dataSets[quote.Symbol].data.unshift(quote.Close);
                     if (currentQuote === undefined) {
                         currentQuote = quote.Symbol;
                     }
 
                     if (currentQuote === quote.Symbol) {
-                        labels.push(quote.Date);
+                        labels.unshift(quote.Date);
                     }
                 }
 

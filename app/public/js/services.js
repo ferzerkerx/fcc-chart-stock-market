@@ -57,6 +57,9 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
 
             var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol IN (' + stockCodes +') and startDate = "' + startDate +'" and endDate = "' + endDate + '"&format=json&env=store://datatables.org/alltableswithkeys';
             return $http.get(url).then(function (response) {
+                if (response.data.query.results === null) {
+                    return {};
+                }
                 return response.data.query.results.quote.map(function(e) {
                     return {Close: e.Close, Symbol: e.Symbol, Date: e.Date};
 
