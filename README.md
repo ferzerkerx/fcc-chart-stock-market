@@ -5,4 +5,4 @@ FreeCodeCamp Chart stock market App
 [See it running](https://damp-sands-17502.herokuapp.com/)
 
 
-![alt tag](https://github.com/ferzerkerx/fcc-voting-app/blob/master/fcc-stock-market.png)
+![alt tag](https://github.com/ferzerkerx/fcc-chart-stock-market/blob/master/fcc-stock-market.png)
