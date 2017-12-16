@@ -25,7 +25,7 @@ stockServices.factory('stockServices', ['$http', '$location', 'notifyingService'
         };
 
         ws.onclose = function() {
-            alert('Lost connection with the server try to reload the page.');
+            throw 'Lost connection with the server try to reload the page.';
         };
 
         var addStockCode = function(stockCode) {
