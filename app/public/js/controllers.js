@@ -110,7 +110,7 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
 
             stockServices.addStockCode($scope.form.stockCode).then(function(data) {
                 if (data === undefined) {
-                    alert('Invalid Stock.');
+                    throw 'Invalid Stock.';
                 }
                 $scope.form.stockCode = "";
             });
@@ -125,7 +125,7 @@ stockControllers.controller('mainController', ['$scope', '$route', '$rootScope',
 
         var renderChart = function(data, labels) {
             var ctx = $("#myChart");
-            var myChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
