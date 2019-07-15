@@ -14,7 +14,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('dotenv').load();
+require('dotenv').config();
 
 app.use('/public', express.static(process.cwd() + '/app/public'));
 
