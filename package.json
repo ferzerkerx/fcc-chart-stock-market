@@ -25,7 +25,7 @@
     "angular-resource": "^1.7.2",
     "angular-route": "^1.7.2",
     "body-parser": "^1.15.1",
-    "bootstrap": "^4.1.2",
+    "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
