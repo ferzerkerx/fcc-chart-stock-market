@@ -282,10 +282,6 @@ async-each@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.3.tgz#b727dbf87d7651602f06f4d4ac387f47d91b0cbf"
 
-async-limiter@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
-
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -3124,11 +3120,9 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-ws@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.0.tgz#422eda8c02a4b5dba7744ba66eebbd84bcef0ec7"
-  dependencies:
-    async-limiter "^1.0.0"
+ws@^7.4.3:
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.3.tgz#1f9643de34a543b8edb124bdcbc457ae55a6e5cd"
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"
